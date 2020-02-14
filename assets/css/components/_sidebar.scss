@@ -1,0 +1,32 @@
+.sidebar {
+  width: 25%;
+  min-width: 200px;
+  border-right: 1px solid $black;
+}
+
+.logo {
+  border-bottom: 1px solid $black;
+  padding: 40px;
+
+  h1 {
+    @apply relative;
+    text-transform: uppercase;
+    padding-left: 5px;
+      font-size: 140px;
+      line-height: 110px;
+
+    a   { display: block; }
+
+    .large {
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+    .small {
+      @apply absolute;
+      top: 0; right: 0;
+      font-weight: 900;
+      font-size: 15%;
+      transform: translate(30px, 2px) rotate(-90deg);
+    }
+  }
+}
