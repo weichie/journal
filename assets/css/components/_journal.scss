@@ -1,0 +1,26 @@
+.journal-list {
+  margin: 50px 0;
+
+  li {
+    display: block;
+    border-bottom: 1px solid $black;
+    padding-bottom: 10px;
+    display: flex;
+    padding: 25px 0;
+  }
+
+  .date {
+    border-right: 1px solid $black;
+    padding-right: 30px;
+  }
+  .items {
+    flex: 1;
+    padding-left: 30px;
+  }
+
+  span {
+    color: $black;
+    opacity: .75;
+    display: block;
+  }
+}

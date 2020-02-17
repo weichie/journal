@@ -20,23 +20,36 @@
           target="_blank"
           class="button--grey"
         >
-          GitHub
         </a>
       </div>
+
+      <ul v-if="allJournals" class="journal-list">
+        <journalItem 
+          v-for="(journal, key) in allJournals" 
+          :key="'journal-' + key" 
+          :item="journal" />
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
+import journalItem from '~/components/journalItem.vue';
+
 export default {
   name: 'Home',
+  components: {
+    journalItem,
+  },
+  mounted() {
+    if (this.$store.state.journal.journals.length === 0) {
+      this.$store.dispatch('journal/GET_JOURNALS', 3);
+    }
+  },
+  computed: {
+    allJournals() {
+      return this.$store.state.journal.journals;
+    },
+  },
 }
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-  @apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-</style>

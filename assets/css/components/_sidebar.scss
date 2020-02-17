@@ -1,6 +1,5 @@
 .sidebar {
-  width: 25%;
-  min-width: 200px;
+  width: 350px;
   border-right: 1px solid $black;
 }
 
@@ -12,8 +11,8 @@
     @apply relative;
     text-transform: uppercase;
     padding-left: 5px;
-      font-size: 140px;
-      line-height: 110px;
+    font-size: 140px;
+    line-height: 110px;
 
     a   { display: block; }
 

@@ -6,6 +6,23 @@ admin.initializeApp();
 const express = require('express');
 const app = express();
 
+// allow localhost to call our firebase functions
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const arrayOfValidOrigins = ['http://localhost:3000'];
+  // arrayOfValidOrigins is an array of all the URL from where you want to allow 
+  // to accept requests. In your case: ['http://localhost:3000'].
+  // In case you want to accept requests from everywhere, set:
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  if (arrayOfValidOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,HEAD,PUT,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 // -- Get all journals ----------
 app.get('/journals', (req, res) => {
   admin
