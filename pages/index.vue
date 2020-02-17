@@ -1,27 +1,12 @@
 <template>
   <div class="page">
     <div class="container">
-      <h1 class="title">
-        journal
-      </h1>
-      <h2 class="subtitle">
-        Nuxt/firebase project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-        </a>
+      <div class="title">
+        <h1>Your daily 5M Journal</h1>
+        <h2>What are you grateful for today?</h2>
       </div>
+
+      <addJournalForm />
 
       <ul v-if="allJournals" class="journal-list">
         <journalItem 
@@ -35,11 +20,13 @@
 
 <script>
 import journalItem from '~/components/journalItem.vue';
+import addJournalForm from '~/components/addJournalForm.vue';
 
 export default {
   name: 'Home',
   components: {
     journalItem,
+    addJournalForm,
   },
   mounted() {
     if (this.$store.state.journal.journals.length === 0) {

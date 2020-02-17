@@ -1,0 +1,14 @@
+.btn {
+  @apply font-bold py-2 px-4 text-white;
+  display: inline-block;
+}
+
+.btn-primary {
+  @apply text-white;
+  background-color: $blue;
+  transition: background-color .2s ease;
+
+  &:hover {
+    background-color: lighten($blue, 10%);
+  }
+}
