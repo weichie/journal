@@ -1,6 +1,7 @@
 <template>
   <div class="add-journal-content">
-    <form action="" class="add-journal" v-if="!successMessage">
+
+    <form action="" class="add-journal" v-if="!successMessage && allowpost">
       <div class="input-row" :class="{'error': errors && errors.includes('item_1') }">
         <label for="item_1">Item 1</label>
         <input type="text" id="item_1" v-model="item_1">
@@ -18,8 +19,12 @@
       </div>
     </form>
 
-    <div class="success-message" v-else>
+    <div class="success-message" v-if="successMessage && !allowpost">
       <strong>{{ successMessage }}</strong>
+    </div>
+
+    <div class="success-message" v-if="!successMessage && !allowpost">
+      <strong>Good job! You wrote your journal today.</strong>
     </div>
   </div>
 </template>
@@ -27,6 +32,9 @@
 <script>
 export default {
   name: 'addJournalForm',
+  props: {
+    allowpost: Boolean,
+  },
   data() {
     return {
       item_1: '',

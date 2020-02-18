@@ -46,7 +46,7 @@ export default {
       if(this.allJournals.length > 0) {
         return this.allJournals[0].createdAt;
       }
-    }
+    },
   },
 }
 </script>

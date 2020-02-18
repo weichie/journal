@@ -5,8 +5,8 @@
         <h1>Your daily 5M Journal</h1>
         <h2>What are you grateful for today?</h2>
       </div>
-
-      <addJournalForm />
+      
+      <addJournalForm :allowpost="newestJournal !== today" />
 
       <ul v-if="allJournals" class="journal-list">
         <journalItem 
@@ -28,6 +28,11 @@ export default {
     journalItem,
     addJournalForm,
   },
+  data() {
+    return {
+      today: this.$options.filters.dateFormat(new Date().toISOString()),
+    }
+  },
   mounted() {
     if (this.$store.state.journal.journals.length === 0) {
       this.$store.dispatch('journal/GET_JOURNALS', 3);
@@ -37,6 +42,12 @@ export default {
     allJournals() {
       return this.$store.state.journal.journals;
     },
+    newestJournal() {
+      if(this.allJournals.length > 0) {
+        const date = this.allJournals[0].createdAt;
+        return this.$options.filters.dateFormat(date);
+      }
+    }
   },
 }
 </script>
