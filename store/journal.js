@@ -11,7 +11,9 @@ export const state = () => ({
 });
 
 export const getters = {
-  all: state => state.journals,
+  getAllJournals: (state) => {
+    return state.journals;
+  },
 };
 
 export const actions = {

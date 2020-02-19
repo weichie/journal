@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page m-4">
     <div class="container">
       <div class="title">
         <h1>Your daily 5M Journal</h1>
@@ -14,6 +14,8 @@
           :key="'journal-' + key" 
           :item="journal" />
       </ul>
+
+      <nuxt-link v-if="limit <= allJournals.length" to="/archive" class="btn btn-primary">View journal archive</nuxt-link>
     </div>
   </div>
 </template>
@@ -31,6 +33,7 @@ export default {
   data() {
     return {
       today: this.$options.filters.dateFormat(new Date().toISOString()),
+      limit: 5,
     }
   },
   mounted() {
@@ -40,7 +43,9 @@ export default {
   },
   computed: {
     allJournals() {
-      return this.$store.state.journal.journals;
+      const observer = this.$store.getters['journal/getAllJournals'];
+      const array = JSON.parse(JSON.stringify(observer));
+      return this.limit ? array.slice(0, this.limit) : array;
     },
     newestJournal() {
       if(this.allJournals.length > 0) {

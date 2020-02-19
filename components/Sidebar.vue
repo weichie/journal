@@ -5,8 +5,8 @@
     <div class="menu">
       <nav class="main-menu">
         <nuxt-link to="/">Home</nuxt-link>
-        <nuxt-link to="/about">About</nuxt-link>
         <nuxt-link to="/archive">Archive</nuxt-link>
+        <nuxt-link to="/about">About</nuxt-link>
         <!-- <nuxt-link to="/profile">Profile</nuxt-link> -->
         <!-- <nuxt-link to="/logout">Logout</nuxt-link> -->
       </nav>
