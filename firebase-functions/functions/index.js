@@ -1,19 +1,20 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const app = require('express')();
 
 admin.initializeApp();
 
-const express = require('express');
-const app = express();
+
+
+const firebase = require('firebase');
+firebase.initializeApp(config);
+
+const db = admin.firestore();
 
 // allow localhost to call our firebase functions
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   const arrayOfValidOrigins = ['http://localhost:3000'];
-  // arrayOfValidOrigins is an array of all the URL from where you want to allow 
-  // to accept requests. In your case: ['http://localhost:3000'].
-  // In case you want to accept requests from everywhere, set:
-  // res.setHeader('Access-Control-Allow-Origin', '*');
   if (arrayOfValidOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
@@ -25,8 +26,7 @@ app.use((req, res, next) => {
 
 // -- Get all journals ----------
 app.get('/journals', (req, res) => {
-  admin
-    .firestore()
+  db
     .collection("journal")
     .orderBy('createdAt', 'desc')
     .get()
@@ -55,7 +55,7 @@ app.post('/journal', (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  admin.firestore()
+  db
     .collection('journal')
     .add(newJournal)
     .then(doc => {
@@ -64,6 +64,41 @@ app.post('/journal', (req, res) => {
     .catch(err => {
       console.error(err);
       res.status(500).json({ error: 'Something went wrong' });
+    });
+});
+
+// -- Signup route ----------
+app.post('/signup', (req, res) => {
+  const newUser = {
+    email: req.body.email,
+    password: req.body.password,
+    confirmPassword: req.body.confirmPassword,
+    handle: req.body.handle,
+  };
+
+  //TODO: validate data
+
+  db
+    .doc(`/users/${newUser.handle}`)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        return res.status(400).json({ handle: 'This handle is already taken' });
+      } else {
+        return firebase
+          .auth()
+          .createUserWithEmailAndPassword(newUser.email, newUser.password);
+      }
+    })
+    .then((data) => {
+      return data.user.getIdToken();
+    })
+    .then((token) => {
+      return res.status(201).json({ token });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ code: err.code, message: err.message });
     });
 });
 
