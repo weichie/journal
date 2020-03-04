@@ -4,7 +4,15 @@ const app = require('express')();
 
 admin.initializeApp();
 
-
+const config = {
+  apiKey: "AIzaSyDD5vATYblq8b4Buep67uuTa3hTBDoQ-Y8",
+  authDomain: "weichie-journal.firebaseapp.com",
+  databaseURL: "https://weichie-journal.firebaseio.com",
+  projectId: "weichie-journal",
+  storageBucket: "weichie-journal.appspot.com",
+  messagingSenderId: "426835331711",
+  appId: "1:426835331711:web:dd47c75419c72a68d20d4a"
+};
 
 const firebase = require('firebase');
 firebase.initializeApp(config);
@@ -77,7 +85,7 @@ app.post('/signup', (req, res) => {
   };
 
   //TODO: validate data
-
+  let token, userId;
   db
     .doc(`/users/${newUser.handle}`)
     .get()
@@ -91,9 +99,20 @@ app.post('/signup', (req, res) => {
       }
     })
     .then((data) => {
+      userId = data.user.uid;
       return data.user.getIdToken();
     })
-    .then((token) => {
+    .then((idToken) => {
+      token = idToken;
+      const userCredentials = {
+        handle: newUser.handle,
+        email: newUser.email,
+        createdAt: new Date().toISOString(),
+        userId,
+      };
+      return db.doc(`/users/${newUser.handle}`).set(userCredentials);
+    })
+    .then(() => {
       return res.status(201).json({ token });
     })
     .catch((err) => {
