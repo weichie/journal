@@ -24,6 +24,33 @@ app.use((req, res, next) => {
   next();
 });
 
+const FBAuth = (req, res, next) => {
+  let idToken;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    idToken = req.headers.authorization.split('Bearer ')[1];
+  } else {
+    console.error('No token found');
+    return res.status(403).json({ error: 'Unauthorized' });
+  }
+
+  admin
+    .auth()
+    .verifyIdToken(idToken)
+    .then((decodedToken) => {
+      console.log(decodedToken);
+      req.user = decodedToken;
+      return db.collection('users').where('userId', '==', req.user.uid).limit(1).get();
+    })
+    .then((data) => {
+      req.user.userHandle = data.docs[0].data().userHandle;
+      return next();
+    })
+    .catch((err) => {
+      console.error('Error while verifying token ', err);
+      return res.status(403).json(err);
+    });
+}
+
 // -- Get all journals ----------
 app.get('/journals', (req, res) => {
   db
@@ -48,10 +75,10 @@ app.get('/journals', (req, res) => {
 });
 
 // -- Post a journal ----------
-app.post('/journal', (req, res) => {
+app.post('/journal', FBAuth, (req, res) => {
   const newJournal = {
     body: req.body.body,
-    userHandle: 'weichie',
+    userHandle: req.user.userHandle,
     createdAt: new Date().toISOString(),
   };
 
@@ -100,6 +127,9 @@ app.post('/login', (req, res) => {
     })
     .catch(err => {
       console.error(err);
+      if(err.code === 'auth/wrong-password'){
+        return res.status(403).json({general: 'Wrong credentials, please try again'});
+      };
       return res.status(500).json({ error: err.code });
     });
 });
@@ -110,7 +140,7 @@ app.post('/signup', (req, res) => {
     email: req.body.email,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
-    handle: req.body.handle,
+    userHandle: req.body.userHandle,
   };
 
   let errors = {};
@@ -123,12 +153,13 @@ app.post('/signup', (req, res) => {
 
   if (isEmpty(newUser.password)) errors.password = 'Must not be empty';
   if (newUser.password !== newUser.confirmPassword) errors.confirmPassword = 'Passwords must match';
-  if (isEmpty(newUser.handle)) errors.handle = 'Must not be empty';
+  if (isEmpty(newUser.userHandle)) errors.handle = 'Must not be empty';
 
   if (Object.keys(errors).length > 0) return res.status(400).json(errors);
-
+  
+  let token, userId;
   db
-    .doc(`/users/${newUser.handle}`)
+    .doc(`/users/${newUser.userHandle}`)
     .get()
     .then((doc) => {
       if (doc.exists) {
@@ -139,9 +170,21 @@ app.post('/signup', (req, res) => {
           .createUserWithEmailAndPassword(newUser.email, newUser.password);
       }
     })
-    .then((data) => {
+    .then(data => {
+      userId = data.user.uid;
       return data.user.getIdToken();
     })
+    .then((idToken) => {
+      token = idToken;
+      const userCredentials = {
+        handle: newUser.userHandle,
+        email: newUser.email,
+        createdAt: new Date().toISOString(),
+        userId,
+      };
+      return db.doc(`/users/${newUser.handle}`).set(userCredentials);
+    })
+
     .then((token) => {
       return res.status(201).json({ token });
     })
