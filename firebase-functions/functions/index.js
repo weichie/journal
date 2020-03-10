@@ -5,7 +5,6 @@ const app = require('express')();
 admin.initializeApp();
 
 
-
 const firebase = require('firebase');
 firebase.initializeApp(config);
 
@@ -182,10 +181,9 @@ app.post('/signup', (req, res) => {
         createdAt: new Date().toISOString(),
         userId,
       };
-      return db.doc(`/users/${newUser.handle}`).set(userCredentials);
+      return db.doc(`/users/${newUser.userHandle}`).set(userCredentials);
     })
-
-    .then((token) => {
+    .then((data) => {
       return res.status(201).json({ token });
     })
     .catch((err) => {
