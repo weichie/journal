@@ -4,7 +4,7 @@ const app = require('express')();
 const FBAuth = require('./util/fbAuth');
 
 const { getAllJournals, postOneJournal } = require('./handlers/journals');
-const { signup, login } = require('./handlers/users');
+const { signup, login, getAuthenticatedUser } = require('./handlers/users');
 
 // allow localhost to call our firebase functions
 app.use((req, res, next) => {
@@ -27,6 +27,7 @@ app.post('/journal', FBAuth, postOneJournal);
 // -- USER Route ----------
 app.post('/login', login);
 app.post('/signup', signup);
+app.get('/user', FBAuth, getAuthenticatedUser);
 
 /* Export Routes */
 exports.api = functions.region('europe-west1').https.onRequest(app);

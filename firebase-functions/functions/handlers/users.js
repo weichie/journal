@@ -78,3 +78,28 @@ exports.login = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 }
+
+// -- Get logged in user details ----------
+exports.getAuthenticatedUser = (req, res) => {
+  let userData = {};
+  db
+    .doc(`/users/${req.user.userHandle}`)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        userData.credentials = doc.data();
+        return db.collection('favorites').where('userHandle', '==', req.user.userHandle).get();
+      }
+    })
+    .then((data) => {
+      userData.favorites = [];
+      data.forEach(doc => {
+        userData.favorites.push(doc.data());
+      });
+      return res.json(userData);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+}
