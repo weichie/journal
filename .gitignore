@@ -7,6 +7,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+firebase-functions/functions/util/config.js
+
 # Runtime data
 pids
 *.pid
@@ -88,3 +90,4 @@ sw.*
 
 # Vim swap files
 *.swp
+
