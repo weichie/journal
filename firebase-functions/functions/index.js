@@ -4,6 +4,15 @@ const app = require('express')();
 
 admin.initializeApp();
 
+const config = {
+  apiKey: "AIzaSyDD5vATYblq8b4Buep67uuTa3hTBDoQ-Y8",
+  authDomain: "weichie-journal.firebaseapp.com",
+  databaseURL: "https://weichie-journal.firebaseio.com",
+  projectId: "weichie-journal",
+  storageBucket: "weichie-journal.appspot.com",
+  messagingSenderId: "426835331711",
+  appId: "1:426835331711:web:dd47c75419c72a68d20d4a"
+};
 
 const firebase = require('firebase');
 firebase.initializeApp(config);
@@ -36,7 +45,6 @@ const FBAuth = (req, res, next) => {
     .auth()
     .verifyIdToken(idToken)
     .then((decodedToken) => {
-      console.log(decodedToken);
       req.user = decodedToken;
       return db.collection('users').where('userId', '==', req.user.uid).limit(1).get();
     })
@@ -176,7 +184,7 @@ app.post('/signup', (req, res) => {
     .then((idToken) => {
       token = idToken;
       const userCredentials = {
-        handle: newUser.userHandle,
+        userHandle: newUser.userHandle,
         email: newUser.email,
         createdAt: new Date().toISOString(),
         userId,
