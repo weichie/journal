@@ -1,7 +1,10 @@
 export const GET_JOURNALS = "GET_JOURNALS";
+export const GET_ALL_JOURNALS = "GET_ALL_JOURNALS";
 export const WRITE_JOURNAL = "WRITE_JOURNAL";
 
 import axios from 'axios';
+
+const APIURL = process.env.baseUrl;
 
 export const state = () => ({
   journals: [],
@@ -19,19 +22,31 @@ export const getters = {
 export const actions = {
   [GET_JOURNALS]: ({commit}, payload) => {
     console.warn('MAKING FIREBASE CALL');
-    axios.get('https://europe-west1-weichie-journal.cloudfunctions.net/api/journals')
+    axios.get(`${APIURL}/userjournals`)
       .then(res => {
+        console.log(payload);
+        console.log(res);
         commit(GET_JOURNALS, res.data);
       })
       .catch(err => {
-        console.error('GET_JOUNRALS: ', err);
+        console.error('GET_JOURNALS: ', err);
+      });
+  },
+  [GET_ALL_JOURNALS]: ({ commit }, payload) => {
+    console.warn('MAKING FIREBASE CALL');
+    axios.get(`${APIURL}/journals`)
+      .then(res => {
+        commit(GET_ALL_JOURNALS, res.data);
+      })
+      .catch(err => {
+        console.error('GET_JOURNALS: ', err);
       });
   },
   [WRITE_JOURNAL]: ({commit, dispatch}, payload) => {
     console.warn('MAKING FIREBASE CALL');
     const jsonString = JSON.stringify({ body: payload });
     
-    axios.post('https://europe-west1-weichie-journal.cloudfunctions.net/api/journal', jsonString, {
+    axios.post(`${APIURL}/journal`, jsonString, {
         headers: {'Content-Type': 'application/json'}
       })
       .then(res => {
@@ -45,8 +60,11 @@ export const actions = {
 }
 
 export const mutations = {
-  [GET_JOURNALS] (state, payload) {
+  [GET_JOURNALS](state, payload) {
     state.journals = payload;
+  },
+  [GET_ALL_JOURNALS] (state, payload) {
+    state.allJournals = payload;
   },
   [WRITE_JOURNAL] (state, payload) {
     state.writeSuccess = payload;

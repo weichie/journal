@@ -63,5 +63,8 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  env: {
+    baseUrl: 'https://europe-west1-weichie-journal.cloudfunctions.net/api'
   }
 };
