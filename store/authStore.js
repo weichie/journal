@@ -1,6 +1,7 @@
 export const LOGIN_USER = "LOGIN_USER";
 export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_USER_DATA = "SET_USER_DATA";
+export const LOGOUT_USER = "LOGOUT_USER";
 
 import axios from 'axios';
 
@@ -48,6 +49,12 @@ export const actions = {
       .catch(err => {
         console.error(err);
       });
+  },
+  [LOGOUT_USER]: ({commit}) => {
+    localStorage.removeItem('FBIdToken');
+    delete axios.defaults.headers.common['Authorization'];
+    commit('SET_AUTHENTICATED', false);
+    $nuxt.$router.push('/login');
   },
 };
 

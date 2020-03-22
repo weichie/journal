@@ -8,7 +8,7 @@
         <nuxt-link to="/archive">Archive</nuxt-link>
         <nuxt-link to="/about">About</nuxt-link>
         <!-- <nuxt-link to="/profile">Profile</nuxt-link> -->
-        <!-- <nuxt-link to="/logout">Logout</nuxt-link> -->
+        <a href="#!" @click.prevent="logoutUser">Logout</a>
       </nav>
     </div>
 
@@ -36,6 +36,11 @@ export default {
       const date = new Date();
       return date.getFullYear();
     }
-  }
+  },
+  methods: {
+    logoutUser() {
+      this.$store.dispatch('authStore/LOGOUT_USER');
+    },
+  },
 }
 </script>
