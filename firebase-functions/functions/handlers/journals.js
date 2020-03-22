@@ -40,3 +40,25 @@ exports.postOneJournal = (req, res) => {
       res.status(500).json({ error: 'Something went wrong' });
     });
 }
+
+exports.getUserJournals = (req, res) => {
+  db.collection('journal')
+    .where('userHandle', '==', req.user.userHandle)
+    .orderBy('createdAt', 'desc')
+    .get()
+    .then((data) => {
+      let journals = [];
+      data.forEach((doc) => {
+        journals.push({
+          journalId: doc.id,
+          body: doc.data().body,
+          userHandle: doc.data().userHandle,
+          createdAt: doc.data().createdAt
+        });
+      });
+      return res.json(journals);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}

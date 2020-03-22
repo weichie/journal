@@ -3,7 +3,7 @@ const app = require('express')();
 
 const FBAuth = require('./util/fbAuth');
 
-const { getAllJournals, postOneJournal } = require('./handlers/journals');
+const { getAllJournals, postOneJournal, getUserJournals } = require('./handlers/journals');
 const { signup, login, getAuthenticatedUser } = require('./handlers/users');
 
 // allow localhost to call our firebase functions
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 
 // -- JOURNAL Routes ----------
 app.get('/journals', getAllJournals);
-
+app.get('/userjournals', FBAuth, getUserJournals);
 app.post('/journal', FBAuth, postOneJournal);
 
 // -- USER Route ----------
