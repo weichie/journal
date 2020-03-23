@@ -2,11 +2,20 @@ form.add-journal {
   width: 100%;
   max-width: 500px;
 }
+form.auth-form {
+  @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4;
+  border: 2px solid lime;
+}
 
 .input-row {  
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+
+  &.full    {width: 100%;}
+  &.semi    {width: 75%;}
+  &.med     {width: 50%;}
+  &.small   {width: 25%;}
 
   &.error {
     label {
@@ -18,18 +27,15 @@ form.add-journal {
   }
 
   label {
-    display: inline-block;
-    width: 100px;
+    @apply block text-gray-700 text-sm font-bold mb-2;
+    min-width: 100px;
     padding: 0;
   }
 
-  input[type='text'] {
-    border: 1px solid $black;
+  input {
+    @apply shadow border rounded w-full py-2 px-3;
+    appearance: none;
     outline: none;
-    padding: 5px;
-    font-size: 14px;
-    width: 100%;
-    transition: all .2s ease;
 
     &:focus {
       border: 1px solid $blue;

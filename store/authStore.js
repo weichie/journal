@@ -1,4 +1,5 @@
 export const LOGIN_USER = "LOGIN_USER";
+export const REGISTER_USER = "REGISTER_USER";
 export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_USER_DATA = "SET_USER_DATA";
 export const LOGOUT_USER = "LOGOUT_USER";
@@ -25,7 +26,25 @@ export const actions = {
         axios.defaults.headers.common['Authorization'] = FBIdToken;
       })
       .then(() => {
-        commit('SET_AUTHENTICATED', true);
+        commit(SET_AUTHENTICATED, true);
+        dispatch(SET_USER_DATA);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  },
+  [REGISTER_USER]: ({commit, dispatch}, payload) => {
+    console.log(payload);
+    //TODO: set loading
+    axios
+      .post(`${APIURL}/signup`, payload)
+      .then((res) => {
+        const FBIdToken = `Bearer ${res.data.token}`;
+        localStorage.setItem('FBIdToken', FBIdToken);
+        axios.defaults.headers.common['Authorization'] = FBIdToken;
+      })
+      .then(() => {
+        commit(SET_AUTHENTICATED, true);
         dispatch(SET_USER_DATA);
       })
       .catch(err => {
