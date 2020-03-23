@@ -66,5 +66,5 @@ export default {
   },
   env: {
     baseUrl: 'https://europe-west1-weichie-journal.cloudfunctions.net/api'
-  }
+  },
 };

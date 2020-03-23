@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" v-if="authenticated">
     <Logo />
 
     <div class="menu">
@@ -35,7 +35,10 @@ export default {
     date() {
       const date = new Date();
       return date.getFullYear();
-    }
+    },
+    authenticated() {
+      return this.$store.state.authStore.loggedIn;
+    },
   },
   methods: {
     logoutUser() {

@@ -26,6 +26,7 @@ import addJournalForm from '~/components/addJournalForm.vue';
 
 export default {
   name: 'Home',
+  middleware: 'auth',
   components: {
     journalItem,
     addJournalForm,

@@ -8,7 +8,7 @@ import axios from 'axios';
 const APIURL = process.env.baseUrl;
 
 export const state = () => ({
-  authenticated: false,
+  loggedIn: false,
   user: {},
   token: null,
   loading: false,
@@ -60,7 +60,7 @@ export const actions = {
 
 export const mutations = {
   [SET_AUTHENTICATED]: (state, payload) => {
-    state.authenticated = payload;
+    state.loggedIn = payload;
   },
   [SET_USER_DATA]: (state, payload) => {
     state.user = payload;

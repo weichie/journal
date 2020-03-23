@@ -2,7 +2,7 @@
   <div class="login">
     <div class="container mx-auto sm">
       <div class="auth-wrapper mx-auto">
-        <h1>Login</h1>
+        <h1>Signup</h1>
         <form action="" @submit.prevent="handleSubmit()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div class="input-row full mb-4">
             <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
@@ -16,7 +16,7 @@
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
               Sign In
             </button>
-            <nuxt-link to="/signup" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+            <nuxt-link to="/login" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
               Create new account
             </nuxt-link>
           </div>
@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: 'Signup',
   data() {
     return {
       email: '',

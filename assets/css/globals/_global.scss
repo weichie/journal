@@ -7,6 +7,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  background: $bg;
 }
 
 *,
@@ -22,7 +23,7 @@ html {
 }
 
 .container {
-  margin: 0 auto;
-  width: 95%;
-  max-width: 1200px;
+  &.sm  {max-width: 680px;}
+  &.md  {max-width: 800px;}
+  &.lg  {max-width: 1100px;}
 }
