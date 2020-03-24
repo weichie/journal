@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <div class="container mx-auto sm">
+    <div class="content">
       <div class="auth-wrapper mx-auto">
         <h1>Signup</h1>
         <form action="" @submit.prevent="handleSubmit()" class="auth-form">
@@ -33,16 +33,27 @@
         <Copyright />
       </div>
     </div>
+
+    <authPanel 
+      bg="/images/journal_bg.jpg" 
+      title="Start your journey here!"
+      info="The simplest thing you can do to start your day happy. Bored out at home? Still try to focus on the bright parts in your day. A happier you in 5 minutes a day!"
+      signupText="Already have an account?"
+      signupButton="Login"
+      signupRoute="/login"
+    />
   </div>
 </template>
 
 <script>
 import Copyright from '~/components/copyright';
+import authPanel from '~/components/authPanel';
 
 export default {
   name: 'Signup',
   components: {
     Copyright,
+    authPanel,
   },
   data() {
     return {
