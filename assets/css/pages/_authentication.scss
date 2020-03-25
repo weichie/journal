@@ -1,3 +1,7 @@
+.auth-wrapper {
+  width: 75%;
+}
+
 .login {
   width: 100%;
   display: flex;
@@ -13,10 +17,19 @@
   
   .content {
     width: 550px;
-    border: 1px solid lime;
     position: relative;
     z-index: 10;
     background: $bg;
+    display: flex;
+    align-items: center;
+
+    h1 {
+      @apply text-center;
+      font-weight: 700;
+      font-size: 30px;
+      color: $blue;
+      margin-bottom: 25px;
+    }
 
     @media (max-width: 1250px) {
       width: 450px;

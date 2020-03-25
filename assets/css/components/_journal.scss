@@ -24,3 +24,29 @@
     display: block;
   }
 }
+
+.journal-wrapper {
+  @apply mt-8;
+}
+
+.journal-item {
+  &:first-child .inner    {@apply border-t;}
+
+  .inner {
+    @apply border-r border-b border-l border-gray-400 p-4;
+    background: $white;
+  }
+
+  p {
+    @apply text-sm text-gray-600 flex items-center mb-3;
+  }
+
+  .items {
+    list-style-type: disc;
+    padding-left: 20px;
+
+    li {
+      margin-bottom: 5px;
+    }
+  }
+}

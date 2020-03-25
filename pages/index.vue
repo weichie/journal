@@ -8,12 +8,12 @@
       
       <addJournalForm :allowpost="newestJournal !== today" />
 
-      <ul v-if="allJournals" class="journal-list">
+      <div v-if="allJournals" class="journal-wrapper">
         <journalItem 
           v-for="(journal, key) in allJournals" 
           :key="'journal-' + key" 
           :item="journal" />
-      </ul>
+      </div>
 
       <nuxt-link v-if="limit <= allJournals.length" to="/archive" class="btn btn-primary">View journal archive</nuxt-link>
     </div>

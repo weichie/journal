@@ -3,20 +3,20 @@
     <div class="content">
       <div class="auth-wrapper mx-auto">
         <h1>Login</h1>
-        <form action="" @submit.prevent="handleSubmit()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div class="input-row full mb-4">
+        <form action="" @submit.prevent="handleSubmit()" class="auth-form">
+          <div class="input-row">
             <label for="email">Email</label>
             <input type="email" id="email" v-model="email" />
           </div>
-          <div class="input-row full mb-4">
+          <div class="input-row">
             <label for="password">Password</label>
             <input type="password" id="password" v-model="password" />
           </div>
-          <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          <div class="form-buttons">
+            <button class="btn-blue" type="submit">
               Sign In
             </button>
-            <nuxt-link to="/signup" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+            <nuxt-link to="/signup" class="btn-link">
               Create new account
             </nuxt-link>
           </div>

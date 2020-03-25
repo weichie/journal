@@ -12,3 +12,20 @@
     background-color: lighten($blue, 10%);
   }
 }
+
+.btn-blue {
+  @apply block bg-blue-500 text-white font-bold py-2 px-4 rounded outline-none mb-2;
+  width: 100%;
+
+  &:hover {
+    @apply bg-blue-700;
+  }
+}
+
+.btn-link {
+  @apply font-bold text-sm text-blue-500;
+
+  &:hover {
+    @apply text-blue-800;
+  }
+}

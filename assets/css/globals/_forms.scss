@@ -3,14 +3,11 @@ form.add-journal {
   max-width: 500px;
 }
 form.auth-form {
-  @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4;
-  border: 2px solid lime;
+  @apply bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4;
 }
 
 .input-row {  
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 
   &.full    {width: 100%;}
   &.semi    {width: 75%;}
@@ -28,7 +25,6 @@ form.auth-form {
 
   label {
     @apply block text-gray-700 text-sm font-bold mb-2;
-    min-width: 100px;
     padding: 0;
   }
 
@@ -41,4 +37,8 @@ form.auth-form {
       border: 1px solid $blue;
     }
   }
+}
+
+.form-buttons {
+  @apply mt-6 text-center;
 }
