@@ -1,5 +1,5 @@
 <template>
-  <div class="page regular-page">
+  <div class="page regular-page m-8">
     <div class="container">
       <div class="title">
         <h1>About 5M Journal</h1>

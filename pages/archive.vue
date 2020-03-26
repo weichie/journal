@@ -1,17 +1,17 @@
 <template>
-  <div class="page">
+  <div class="page m-8">
     <div class="container">
       <div class="title">
         <h1>Archive ({{ journalCounter }})</h1>
         <h2>From {{ oldestJournal | dateFormat }} to {{ newestJournal | dateFormat }}</h2>
       </div>
 
-      <ul v-if="allJournals" class="journal-list">
+      <div v-if="allJournals" class="journal-wrapper">
         <journalItem 
           v-for="(journal, key) in allJournals" 
           :key="'journal-' + key" 
           :item="journal" />
-      </ul>
+      </div>
     </div>
   </div>
 </template>
