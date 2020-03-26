@@ -1,6 +1,17 @@
 form.add-journal {
   width: 100%;
   max-width: 500px;
+
+  .input-row {
+    display: flex;
+    align-items: center;
+  }
+
+  label {
+    display: inline-block;
+    width: 100px;
+    margin: 0;
+  }
 }
 form.auth-form {
   @apply bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4;

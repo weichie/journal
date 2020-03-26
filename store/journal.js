@@ -20,20 +20,17 @@ export const getters = {
 };
 
 export const actions = {
-  [GET_JOURNALS]: ({commit}, payload) => {
+  [GET_JOURNALS]: ({commit}) => {
     console.warn('MAKING FIREBASE CALL');
     axios.get(`${APIURL}/userjournals`)
       .then(res => {
-        console.log(payload);
-        console.log(res);
         commit(GET_JOURNALS, res.data);
       })
       .catch(err => {
         console.error('GET_JOURNALS: ', err);
       });
   },
-  [GET_ALL_JOURNALS]: ({ commit }, payload) => {
-    console.warn('MAKING FIREBASE CALL');
+  [GET_ALL_JOURNALS]: ({ commit }) => {
     axios.get(`${APIURL}/journals`)
       .then(res => {
         commit(GET_ALL_JOURNALS, res.data);
@@ -43,7 +40,6 @@ export const actions = {
       });
   },
   [WRITE_JOURNAL]: ({commit, dispatch}, payload) => {
-    console.warn('MAKING FIREBASE CALL');
     const jsonString = JSON.stringify({ body: payload });
     
     axios.post(`${APIURL}/journal`, jsonString, {
