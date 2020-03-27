@@ -1,5 +1,20 @@
 .auth-wrapper {
   width: 75%;
+
+  .res-logo {
+    display: none;
+    position: absolute;
+    top: 25px; left: 50%;
+    transform: translateX(-50%);
+    width: 125px;
+  }
+
+  @media (max-width: 1080px) {
+    width: 90%;
+  }
+  @media (max-width: 980px) {
+    .res-logo {display: block;}
+  }
 }
 
 .login {
@@ -33,6 +48,9 @@
 
     @media (max-width: 1250px) {
       width: 450px;
+    }
+    @media (max-width: 1080px) {
+      width: 400px;
     }
   }
   .general {
@@ -87,6 +105,28 @@
         font-size: 18px;
         max-width: 450px;
       }
+    }
+
+    @media (max-width: 1250px) {
+      .top-banner {
+        left: 500px;
+        width: calc(100% - 550px);
+      }
+      .info {
+        left: 500px;
+      }
+    }
+    @media (max-width: 1080px) {
+      .top-banner {
+        left: 425px;
+        width: calc(100% - 450px);
+      }
+      .info {
+        left: 425px;
+      }
+    }
+    @media (max-width: 980px) {
+      display: none;
     }
   }
 }

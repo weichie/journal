@@ -2,6 +2,9 @@
   <div class="login">
     <div class="content">
       <div class="auth-wrapper mx-auto">
+        <div class="res-logo">
+          <img src="/images/logo-solo-black.png" alt="Weichie Logo" />
+        </div>
         <h1>Login</h1>
         <form action="" @submit.prevent="handleSubmit()" class="auth-form">
           <div class="input-row">
