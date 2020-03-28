@@ -52,6 +52,9 @@
     @media (max-width: 1080px) {
       width: 400px;
     }
+    @media (max-width: 980px) {
+      width: 100%;
+    }
   }
   .general {
     flex: 1;
