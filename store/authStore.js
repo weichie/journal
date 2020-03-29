@@ -4,6 +4,8 @@ export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_USER_DATA = "SET_USER_DATA";
 export const LOGOUT_USER = "LOGOUT_USER";
 
+import { CLEAR_JOURNAL } from './journal';
+
 import axios from 'axios';
 
 const APIURL = process.env.baseUrl;
@@ -72,7 +74,8 @@ export const actions = {
   [LOGOUT_USER]: ({commit}) => {
     localStorage.removeItem('FBIdToken');
     delete axios.defaults.headers.common['Authorization'];
-    commit('SET_AUTHENTICATED', false);
+    commit(SET_AUTHENTICATED, false);
+    commit('journal/CLEAR_JOURNAL', null, { root: true });
     $nuxt.$router.push('/login');
   },
 };

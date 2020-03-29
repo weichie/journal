@@ -1,6 +1,7 @@
 export const GET_JOURNALS = "GET_JOURNALS";
 export const GET_ALL_JOURNALS = "GET_ALL_JOURNALS";
 export const WRITE_JOURNAL = "WRITE_JOURNAL";
+export const CLEAR_JOURNAL = "CLEAR_JOURNAL";
 
 import axios from 'axios';
 
@@ -53,6 +54,9 @@ export const actions = {
         console.error('WRITE_JOURNAL: ', err);
       });
   },
+  [CLEAR_JOURNAL]: ({commit}) => {
+    commit(CLEAR_JOURNAL);
+  },
 }
 
 export const mutations = {
@@ -64,5 +68,8 @@ export const mutations = {
   },
   [WRITE_JOURNAL] (state, payload) {
     state.writeSuccess = payload;
+  },
+  [CLEAR_JOURNAL] (state) {
+    state.journals = [];
   },
 }

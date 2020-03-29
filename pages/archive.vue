@@ -34,16 +34,18 @@ export default {
       return this.$store.state.journal.journals;
     },
     journalCounter() {
-      return this.allJournals.length;
+      if (this.allJournals) {
+        return this.allJournals.length;
+      }
     },
     oldestJournal() {
-      if(this.allJournals.length > 0) {
+      if(this.allJournals && this.allJournals.length > 0) {
         const lastFromArray = this.allJournals.length - 1;
         return this.allJournals[lastFromArray].createdAt;
       }
     },
     newestJournal() {
-      if(this.allJournals.length > 0) {
+      if(this.allJournals && this.allJournals.length > 0) {
         return this.allJournals[0].createdAt;
       }
     },

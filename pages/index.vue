@@ -38,18 +38,20 @@ export default {
     }
   },
   mounted() {
-    if (this.$store.state.journal.journals.length === 0) {
-      this.$store.dispatch('journal/GET_JOURNALS', 3);
+    if(this.$store.state.journal.journals.length === 0) {
+      this.$store.dispatch('journal/GET_JOURNALS');
     }
   },
   computed: {
     allJournals() {
       const observer = this.$store.getters['journal/getAllJournals'];
       const array = JSON.parse(JSON.stringify(observer));
-      return this.limit ? array.slice(0, this.limit) : array;
+      if(array) {
+        return this.limit ? array.slice(0, this.limit) : array;
+      }
     },
     newestJournal() {
-      if(this.allJournals.length > 0) {
+      if(this.allJournals && this.allJournals.length > 0) {
         const date = this.allJournals[0].createdAt;
         return this.$options.filters.dateFormat(date);
       }
