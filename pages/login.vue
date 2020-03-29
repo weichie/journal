@@ -9,15 +9,27 @@
 
         <form action="" @submit.prevent="handleSubmit()" class="auth-form">
           <div class="input-row">
-            <label for="email">Email <small class="error" v-if="errors && errors.email">{{ errors.email }}</small></label>
+            <label for="email">
+              Email
+              <small class="error" v-if="errors && errors.email">
+                {{ errors.email }}
+              </small>
+            </label>
             <input type="email" id="email" v-model="email" />
           </div>
           <div class="input-row">
-            <label for="password">Password <small class="error" v-if="errors && errors.password">{{ errors.password }}</small></label>
+            <label for="password">
+              Password
+              <small class="error" v-if="errors && errors.password">
+                {{ errors.password }}
+              </small>
+            </label>
             <input type="password" id="password" v-model="password" />
           </div>
           <div class="form-buttons">
-            <small class="block error mb-2" v-if="errors && errors.general">{{errors.general}}</small>
+            <small class="block error mb-2" v-if="errors && errors.general">
+              {{errors.general}}
+            </small>
             <button class="btn-blue" type="submit">
               Sign In
             </button>

@@ -6,24 +6,48 @@
           <img src="/images/logo-solo-black.png" alt="Weichie Logo" />
         </div>
         <h1>Signup</h1>
+
         <form action="" @submit.prevent="handleSubmit()" class="auth-form">
           <div class="input-row full mb-4">
-            <label for="userHandle">Username</label>
+            <label for="userHandle">
+              Username 
+              <small class="error" v-if="errors && errors.handle">
+                {{ errors.handle }}
+              </small>
+            </label>
             <input type="text" id="userHandle" v-model="userHandle" />
           </div>
           <div class="input-row full mb-4">
-            <label for="email">Email</label>
+            <label for="email">
+              Email
+              <small class="error" v-if="errors && errors.handle">
+                {{ errors.email }}
+              </small>
+            </label>
             <input type="email" id="email" v-model="email" />
           </div>
           <div class="input-row full mb-4">
-            <label for="password">Password</label>
+            <label for="password">
+              Password
+              <small class="error" v-if="errors && errors.password">
+                {{ errors.password }}
+              </small>
+            </label>
             <input type="password" id="password" v-model="password" class="" />
           </div>
           <div class="input-row full mb-4">
-            <label for="confirmPassword">Confirm Password</label>
+            <label for="confirmPassword">
+              Confirm Password
+              <small class="error" v-if="errors && errors.confirmPassword">
+                {{ errors.confirmPassword }}
+              </small>
+            </label>
             <input type="password" id="confirmPassword" v-model="confirmPassword" />
           </div>
           <div class="form-buttons">
+            <small class="block error mb-2" v-if="errors && errors.message">
+              {{ errors.message }}
+            </small>
             <button class="btn-blue" type="submit">
               Create account
             </button>
@@ -75,6 +99,13 @@ export default {
         confirmPassword: this.confirmPassword,
       };
       this.$store.dispatch('authStore/REGISTER_USER', userData);
+    },
+  },
+  computed: {
+    errors() {
+      if (this.$store.state.authStore.errors) {
+        return this.$store.state.authStore.errors;
+      }
     },
   },
 }

@@ -39,7 +39,6 @@ export const actions = {
       });
   },
   [REGISTER_USER]: ({commit, dispatch}, payload) => {
-    console.log(payload);
     //TODO: set loading
     axios
       .post(`${APIURL}/signup`, payload)
@@ -53,7 +52,7 @@ export const actions = {
         dispatch(SET_USER_DATA);
       })
       .catch(err => {
-        console.error(err);
+        commit(SET_ERRORS, err.response.data);
       });
   },
   [SET_USER_DATA]: ({commit}, payload = null) => {
