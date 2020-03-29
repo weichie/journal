@@ -6,16 +6,18 @@
           <img src="/images/logo-solo-black.png" alt="Weichie Logo" />
         </div>
         <h1>Login</h1>
+
         <form action="" @submit.prevent="handleSubmit()" class="auth-form">
           <div class="input-row">
-            <label for="email">Email</label>
+            <label for="email">Email <small class="error" v-if="errors && errors.email">{{ errors.email }}</small></label>
             <input type="email" id="email" v-model="email" />
           </div>
           <div class="input-row">
-            <label for="password">Password</label>
+            <label for="password">Password <small class="error" v-if="errors && errors.password">{{ errors.password }}</small></label>
             <input type="password" id="password" v-model="password" />
           </div>
           <div class="form-buttons">
+            <small class="block error mb-2" v-if="errors && errors.general">{{errors.general}}</small>
             <button class="btn-blue" type="submit">
               Sign In
             </button>
@@ -62,6 +64,13 @@ export default {
         password: this.password,
       };
       this.$store.dispatch('authStore/LOGIN_USER', loginData);
+    },
+  },
+  computed: {
+    errors() {
+      if (this.$store.state.authStore.errors) {
+        return this.$store.state.authStore.errors;
+      }
     },
   },
 }

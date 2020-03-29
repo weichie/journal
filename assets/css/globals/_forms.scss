@@ -17,6 +17,12 @@ form.auth-form {
   @apply bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4;
 }
 
+small {
+  &.error {
+    color: $red;
+  }
+}
+
 .input-row {  
   margin-bottom: 10px;
 

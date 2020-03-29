@@ -3,6 +3,7 @@ export const REGISTER_USER = "REGISTER_USER";
 export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_USER_DATA = "SET_USER_DATA";
 export const LOGOUT_USER = "LOGOUT_USER";
+export const SET_ERRORS = "SET_ERRORS";
 
 import { CLEAR_JOURNAL } from './journal';
 
@@ -15,6 +16,7 @@ export const state = () => ({
   user: {},
   token: null,
   loading: false,
+  errors: null,
 });
 
 export const actions = {
@@ -23,16 +25,17 @@ export const actions = {
     axios
       .post(`${APIURL}/login`, payload)
       .then((res) => {
+        commit(SET_ERRORS, null);
         const FBIdToken = `Bearer ${res.data.token}`;
         localStorage.setItem('FBIdToken', FBIdToken);
         axios.defaults.headers.common['Authorization'] = FBIdToken;
       })
-      .then(() => {
+      .then((test) => {
         commit(SET_AUTHENTICATED, true);
         dispatch(SET_USER_DATA);
       })
       .catch(err => {
-        console.error(err);
+        commit(SET_ERRORS, err.response.data);
       });
   },
   [REGISTER_USER]: ({commit, dispatch}, payload) => {
@@ -86,5 +89,8 @@ export const mutations = {
   },
   [SET_USER_DATA]: (state, payload) => {
     state.user = payload;
+  },
+  [SET_ERRORS]: (state, payload) => {
+    state.errors = payload;
   },
 };
