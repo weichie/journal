@@ -3,9 +3,9 @@ export const REGISTER_USER = "REGISTER_USER";
 export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_USER_DATA = "SET_USER_DATA";
 export const LOGOUT_USER = "LOGOUT_USER";
-export const SET_ERRORS = "SET_ERRORS";
 
 import { CLEAR_JOURNAL } from './journal';
+import { SET_ERRORS } from './uiStore';
 
 import axios from 'axios';
 
@@ -25,7 +25,7 @@ export const actions = {
     axios
       .post(`${APIURL}/login`, payload)
       .then((res) => {
-        commit(SET_ERRORS, null);
+        dispatch('uiStore/SET_ERRORS', null, { root: true });
         const FBIdToken = `Bearer ${res.data.token}`;
         localStorage.setItem('FBIdToken', FBIdToken);
         axios.defaults.headers.common['Authorization'] = FBIdToken;
@@ -35,7 +35,7 @@ export const actions = {
         dispatch(SET_USER_DATA);
       })
       .catch(err => {
-        commit(SET_ERRORS, err.response.data);
+        dispatch('uiStore/SET_ERRORS', err.response.data, { root: true });
       });
   },
   [REGISTER_USER]: ({commit, dispatch}, payload) => {
@@ -43,6 +43,7 @@ export const actions = {
     axios
       .post(`${APIURL}/signup`, payload)
       .then((res) => {
+        dispatch('uiStore/SET_ERRORS', null, { root: true });
         const FBIdToken = `Bearer ${res.data.token}`;
         localStorage.setItem('FBIdToken', FBIdToken);
         axios.defaults.headers.common['Authorization'] = FBIdToken;
@@ -52,7 +53,7 @@ export const actions = {
         dispatch(SET_USER_DATA);
       })
       .catch(err => {
-        commit(SET_ERRORS, err.response.data);
+        dispatch('uiStore/SET_ERRORS', err.response.data, { root: true });
       });
   },
   [SET_USER_DATA]: ({commit}, payload = null) => {
@@ -88,8 +89,5 @@ export const mutations = {
   },
   [SET_USER_DATA]: (state, payload) => {
     state.user = payload;
-  },
-  [SET_ERRORS]: (state, payload) => {
-    state.errors = payload;
   },
 };

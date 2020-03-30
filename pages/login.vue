@@ -80,8 +80,8 @@ export default {
   },
   computed: {
     errors() {
-      if (this.$store.state.authStore.errors) {
-        return this.$store.state.authStore.errors;
+      if (this.$store.state.uiStore.errors) {
+        return this.$store.state.uiStore.errors;
       }
     },
   },
