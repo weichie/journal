@@ -74,11 +74,11 @@ export const actions = {
         console.error(err);
       });
   },
-  [LOGOUT_USER]: ({commit}) => {
+  [LOGOUT_USER]: ({commit, dispatch}) => {
     localStorage.removeItem('FBIdToken');
     delete axios.defaults.headers.common['Authorization'];
     commit(SET_AUTHENTICATED, false);
-    commit('journal/' + CLEAR_JOURNAL, null, { root: true });
+    dispatch('journal/' + CLEAR_JOURNAL, null, { root: true });
     $nuxt.$router.push('/login');
   },
 };
