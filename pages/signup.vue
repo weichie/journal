@@ -48,8 +48,9 @@
             <small class="block error mb-2" v-if="errors && errors.message">
               {{ errors.message }}
             </small>
-            <button class="btn-blue" type="submit">
-              Create account
+            <button class="btn-blue" :class="{'loading': loading}" type="submit">
+              <span v-if="!loading">Create account</span>
+              <span v-else>Loading...</span>
             </button>
             <nuxt-link to="/login" class="btn-link">
               Already have an accont?
@@ -107,6 +108,9 @@ export default {
         return this.$store.state.uiStore.errors;
       }
     },
+    loading() {
+      return this.$store.state.uiStore.loading;
+    }
   },
 }
 </script>

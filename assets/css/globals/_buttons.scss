@@ -29,3 +29,7 @@
     @apply text-blue-800;
   }
 }
+
+.btn-blue.loading {
+  @apply opacity-50 cursor-not-allowed;
+}
