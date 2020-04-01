@@ -28,9 +28,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '~plugins/filters.js',
-  ],
+  plugins: ["~plugins/filters.js"],
   /*
    ** Nuxt.js dev-modules
    */
@@ -65,6 +63,6 @@ export default {
     extend(config, ctx) {}
   },
   env: {
-    baseUrl: 'https://europe-west1-weichie-journal.cloudfunctions.net/api'
-  },
+    baseUrl: "https://europe-west1-weichie-journal.cloudfunctions.net/api"
+  }
 };

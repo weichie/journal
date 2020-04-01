@@ -42,17 +42,19 @@ export const actions = {
   },
   [WRITE_JOURNAL]: ({commit, dispatch}, payload) => {
     const jsonString = JSON.stringify({ body: payload });
+
+    console.log(jsonString);
     
-    axios.post(`${APIURL}/journal`, jsonString, {
-        headers: {'Content-Type': 'application/json'}
-      })
-      .then(res => {
-        commit(WRITE_JOURNAL, res.data.message);
-        dispatch(GET_JOURNALS);       
-      })
-      .catch(err => {
-        console.error('WRITE_JOURNAL: ', err);
-      });
+    // axios.post(`${APIURL}/journal`, jsonString, {
+    //     headers: {'Content-Type': 'application/json'}
+    //   })
+    //   .then(res => {
+    //     commit(WRITE_JOURNAL, res.data.message);
+    //     dispatch(GET_JOURNALS);       
+    //   })
+    //   .catch(err => {
+    //     console.error('WRITE_JOURNAL: ', err);
+    //   });
   },
   [CLEAR_JOURNAL]: ({commit}) => {
     commit(CLEAR_JOURNAL);

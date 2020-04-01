@@ -14,6 +14,10 @@
         <label for="item_3">Item 3</label>
         <input type="text" id="item_3" v-model="item_3">
       </div>
+      <div class="input-row">
+        <label for="journalday">Birthday:</label>
+        <input type="date" id="journalday" v-model="journalday">
+      </div>
       <div class="input-row justify-end">
         <button class="btn btn-primary" type="submit" @click.prevent="submitJournal">Write journal</button>
       </div>
@@ -40,15 +44,22 @@ export default {
       item_1: '',
       item_2: '',
       item_3: '',
+      journalday: '',
       errors: null,
     };
   },
+  mounted() {
+    document.querySelector('#journalday').value = new Date().toISOString().substr(0,10);
+  },
   methods: {
     submitJournal() {
+      const formatJournalDay = new Date(this.journalday).toISOString();
+
       const body = {
         item_1: this.item_1,
         item_2: this.item_2,
         item_3: this.item_3,
+        date: formatJournalDay,
       }
 
       if(this.validateForm(body)) {
