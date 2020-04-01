@@ -15,10 +15,11 @@
         <input type="text" id="item_3" v-model="item_3">
       </div>
       <div class="input-row">
-        <label for="journalday">Birthday:</label>
+        <label for="journalday">Select day</label>
         <input type="date" id="journalday" v-model="journalday">
       </div>
       <div class="input-row justify-end">
+        <span class="date-error" v-if="date_error">{{ date_error }}</span>
         <button class="btn btn-primary" type="submit" @click.prevent="submitJournal">Write journal</button>
       </div>
     </form>
@@ -46,10 +47,12 @@ export default {
       item_3: '',
       journalday: '',
       errors: null,
+      date_error: null,
     };
   },
   mounted() {
-    document.querySelector('#journalday').value = new Date().toISOString().substr(0,10);
+    const today = new Date().toISOString().substring(0,10);
+    this.journalday = today;
   },
   methods: {
     submitJournal() {
@@ -68,10 +71,16 @@ export default {
     },
     validateForm(data) {
       const err = [];
+      const today = new Date().toISOString();
 
       for (let [key, value] of Object.entries(data)) {
-        if(value.trim() === '') {
-          err.push(key);
+        if(key === 'date') {
+          const formatJournalDay = new Date(this.journalday).toISOString();
+          this.date_error = (value > today) ? "You can't write for this day yet." : null;
+        } else {
+          if(value.trim() === '') {
+            err.push(key);
+          }
         }
       }
 

@@ -56,6 +56,13 @@ small {
   }
 }
 
+.date-error {
+  color: $red;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 15px;
+}
+
 .form-buttons {
   @apply mt-6 text-center;
 }
