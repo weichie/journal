@@ -26,19 +26,41 @@ exports.postOneJournal = (req, res) => {
   const newJournal = {
     body: req.body.body,
     userHandle: req.user.userHandle,
-    createdAt: new Date().toISOString(),
+    createdAt: req.body.date,
   };
 
   db
     .collection('journal')
-    .add(newJournal)
-    .then(doc => {
-      res.json({ message: `Document ${doc.id} created successfully` });
+    .where('userHandle', '==', newJournal.userHandle)
+    .where('createdAt', '==', newJournal.createdAt)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        return res.status(400).json({ handle: 'There is already a journal for that day' });
+      } else {
+        console.log(newJournal.userHandle, newJournal.createdAt);
+        return db
+          .collection('journal')
+          .add(newJournal);
+      }
+    }).then((doc) => {
+      return res.json({ success: 'true', forDay: `${newJournal.createdAt}`});
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
-      res.status(500).json({ error: 'Something went wrong' });
+      return res.status(500).json({ error: 'Something went wrong.. Please try again later.'});
     });
+
+  // db
+  //   .collection('journal')
+  //   .add(newJournal)
+  //   .then(doc => {
+  //     res.json({ message: `Document ${doc.id} created successfully` });
+  //   })
+  //   .catch(err => {
+  //     console.error(err);
+  //     res.status(500).json({ error: 'Something went wrong' });
+  //   });
 }
 
 exports.getUserJournals = (req, res) => {
