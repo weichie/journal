@@ -28,39 +28,28 @@ exports.postOneJournal = (req, res) => {
     userHandle: req.user.userHandle,
     createdAt: req.body.date,
   };
-
+  
   db
-    .collection('journal')
-    .where('userHandle', '==', newJournal.userHandle)
-    .where('createdAt', '==', newJournal.createdAt)
+    .collection("journal")
+    .where("createdAt", "==", newJournal.createdAt)
+    .where("userHandle", "==", newJournal.userHandle)
     .get()
-    .then((doc) => {
-      if (doc.exists) {
-        return res.status(400).json({ handle: 'There is already a journal for that day' });
-      } else {
-        console.log(newJournal.userHandle, newJournal.createdAt);
+    .then((querySnapshot) => {
+      if (querySnapshot.empty) {
         return db
           .collection('journal')
           .add(newJournal);
+      } else {
+        return res.status(400).json({ handle: 'There is already a journal for that day' });
       }
-    }).then((doc) => {
+    })
+    .then(() => {
       return res.json({ success: 'true', forDay: `${newJournal.createdAt}`});
     })
     .catch((err) => {
       console.error(err);
       return res.status(500).json({ error: 'Something went wrong.. Please try again later.'});
     });
-
-  // db
-  //   .collection('journal')
-  //   .add(newJournal)
-  //   .then(doc => {
-  //     res.json({ message: `Document ${doc.id} created successfully` });
-  //   })
-  //   .catch(err => {
-  //     console.error(err);
-  //     res.status(500).json({ error: 'Something went wrong' });
-  //   });
 }
 
 exports.getUserJournals = (req, res) => {
