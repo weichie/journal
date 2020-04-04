@@ -40,6 +40,7 @@ exports.postOneJournal = (req, res) => {
           .collection('journal')
           .add(newJournal);
       } else {
+        console.error('There is already a journal for that day');
         return res.status(400).json({ handle: 'There is already a journal for that day' });
       }
     })

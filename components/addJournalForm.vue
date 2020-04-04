@@ -77,6 +77,7 @@ export default {
         if(key === 'date') {
           const formatJournalDay = new Date(this.journalday).toISOString();
           this.date_error = (value > today) ? "You can't write for this day yet." : null;
+          return false;
         } else {
           if(value.trim() === '') {
             err.push(key);
