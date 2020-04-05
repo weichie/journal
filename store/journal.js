@@ -3,6 +3,8 @@ export const GET_ALL_JOURNALS = "GET_ALL_JOURNALS";
 export const WRITE_JOURNAL = "WRITE_JOURNAL";
 export const CLEAR_JOURNAL = "CLEAR_JOURNAL";
 
+import { SET_ERRORS, SET_LOADING } from './uiStore';
+
 import axios from 'axios';
 
 const APIURL = process.env.baseUrl;
@@ -32,15 +34,19 @@ export const actions = {
       });
   },
   [GET_ALL_JOURNALS]: ({ commit }) => {
+    dispatch('uiStore/' + SET_LOADING, true, { root: true });
     axios.get(`${APIURL}/journals`)
       .then(res => {
+        dispatch('uiStore/' + SET_LOADING, false, { root: true });
         commit(GET_ALL_JOURNALS, res.data);
       })
       .catch(err => {
+        dispatch('uiStore/' + SET_LOADING, false, { root: true });
         console.error('GET_JOURNALS: ', err);
       });
   },
   [WRITE_JOURNAL]: ({commit, dispatch}, payload) => {
+    dispatch('uiStore/' + SET_LOADING, true, { root: true });
     const pushData = {
       "body": {
         "item_1": payload.item_1,
@@ -50,6 +56,8 @@ export const actions = {
       "date": payload.date
     };
     const jsonString = JSON.stringify(pushData);
+
+    console.log(jsonString);
     
     axios.post(`${APIURL}/journal`, jsonString, {
         headers: {'Content-Type': 'application/json'}
@@ -57,10 +65,11 @@ export const actions = {
       .then(res => {
         console.log(res);
         commit(WRITE_JOURNAL, res.data.message);
-        dispatch(GET_JOURNALS);       
+        dispatch(GET_JOURNALS);
       })
       .catch(err => {
-        console.error('WRITE_JOURNAL: ', err);
+        dispatch('uiStore/' + SET_ERRORS, err.response.data, { root: true });
+        dispatch('uiStore/' + SET_LOADING, false, { root: true });
       });
   },
   [CLEAR_JOURNAL]: ({commit}) => {

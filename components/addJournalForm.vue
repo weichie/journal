@@ -1,7 +1,10 @@
 <template>
   <div class="add-journal-content">
+    <div class="success-message mb-5" v-if="!successMessage && !allowpost">
+      <strong>Good job! You wrote your journal today.</strong>
+    </div>
 
-    <form action="" class="add-journal" v-if="!successMessage && allowpost">
+    <form action="" class="add-journal">
       <div class="input-row" :class="{'error': errors && errors.includes('item_1') }">
         <label for="item_1">Item 1</label>
         <input type="text" id="item_1" v-model="item_1">
@@ -19,17 +22,14 @@
         <input type="date" id="journalday" v-model="journalday">
       </div>
       <div class="input-row justify-end">
-        <span class="date-error" v-if="date_error">{{ date_error }}</span>
+        <span class="date-error" v-if="errors && errors.includes('date')">You can't write for this date yet.</span>
+        <span class="date-error" v-if="storeErrors && storeErrors.handle">{{ storeErrors.handle }}</span>
         <button class="btn btn-primary" type="submit" @click.prevent="submitJournal">Write journal</button>
       </div>
     </form>
 
     <div class="success-message" v-if="successMessage && !allowpost">
       <strong>{{ successMessage }}</strong>
-    </div>
-
-    <div class="success-message" v-if="!successMessage && !allowpost">
-      <strong>Good job! You wrote your journal today.</strong>
     </div>
   </div>
 </template>
@@ -47,7 +47,6 @@ export default {
       item_3: '',
       journalday: '',
       errors: null,
-      date_error: null,
     };
   },
   mounted() {
@@ -76,8 +75,9 @@ export default {
       for (let [key, value] of Object.entries(data)) {
         if(key === 'date') {
           const formatJournalDay = new Date(this.journalday).toISOString();
-          this.date_error = (value > today) ? "You can't write for this day yet." : null;
-          return false;
+          if (value > today) {
+            err.push(key);
+          }
         } else {
           if(value.trim() === '') {
             err.push(key);
@@ -92,6 +92,11 @@ export default {
   computed: {
     successMessage() {
       return this.$store.state.journal.writeSuccess;
+    },
+    storeErrors() {
+      if (this.$store.state.uiStore.errors) {
+        return this.$store.state.uiStore.errors;
+      }
     },
   },
 }
